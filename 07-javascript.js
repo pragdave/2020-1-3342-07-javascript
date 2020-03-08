@@ -67,7 +67,7 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
-String.prototype.bowlderize = function() {
+String.prototype.bowlderize = function () {
   //use regexp to get each upper and lower case vowel
   return this.replace(/[aeiouAEIOU]/g, '*');
 }
@@ -98,8 +98,10 @@ assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
 // START
 function Person(name, title) {
+  //sets the variables for the Person class
   this.name = name;
   this.title = title;
+  //implement the fullname function
   this.fullName = () => {
     return this.title + " " + this.name;
   }
@@ -124,11 +126,12 @@ assert.equal(p.fullName(), "Ms Betty")
 
 //START
 class Person1 {
+  //constructor for Person1 class
   constructor(name, title){
     this.name = name;
     this.title = title;
   }
-
+  //fullname function that returns title and name
   fullName(){
     return this.title + " " + this.name;
   }
@@ -140,8 +143,6 @@ assert.equal(p.name,  "Fred")
 assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
-
-if (false) {
 
 ///////////////// Section 4
 //
@@ -162,6 +163,26 @@ if (false) {
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(func){
+  //variable to hold the original sup function
+  supHolder = String.prototype.sup;
+  //new implementation for the string sup function
+  String.prototype.sup = function() {
+    return "What's up, " + this + "?";
+  }
+  //exception handling for passed in function
+  try {
+    //first try to call the function
+    func();
+  }catch (error) {
+    //throw the error if there is an exception
+    throw error;
+  }finally{
+    //restore the original sup function
+    String.prototype.sup = supHolder;
+  }
+
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -171,13 +192,11 @@ bugs(function() {
 })
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
 // to `bugs()` throws an exception. You might need to
 // investigate JavaScript exception handling and the
 // `finally` clause.
-
 
 assert.throws(
   () => {
@@ -192,6 +211,7 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
+if (false) {
 
 ///////////////// Section 5
 //
