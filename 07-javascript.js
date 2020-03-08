@@ -211,8 +211,6 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-if (false) {
-
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -232,6 +230,13 @@ if (false) {
 
 function myNew(constructor, ...args) {
   //START
+  //use Object.create with the constructor.prototype to be able to add new functionality to
+  //the object we are creating.
+  newObj = Object.create(constructor.prototype);
+  //call the constructor function with the args passed in
+  newObj.constructor(...args);
+  //return the new object created
+  return newObj;
   //END
 }
 
@@ -247,4 +252,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
+
+if (false) {}
