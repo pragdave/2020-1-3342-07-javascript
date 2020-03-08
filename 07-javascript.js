@@ -67,6 +67,10 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function() {
+  //use regexp to get each upper and lower case vowel
+  return this.replace(/[aeiouAEIOU]/g, '*');
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
