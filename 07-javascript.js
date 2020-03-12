@@ -67,6 +67,19 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+let vowels = ["a","e","i","o","u", "A", "E", "I", "O", "U"]
+
+String.prototype.bowlderize = function(){
+  let retString = this
+  for(let length in this){
+    for(let vow in vowels){
+      retString = retString.replace(vowels[vow], "*")
+    }
+  }
+  console.log(".")
+  return retString
+
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
