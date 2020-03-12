@@ -67,6 +67,9 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function() {
+  return this.replace(/[aeiou]/ig, '*'); //string replace to get rid of the vowels
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +78,7 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+
 
 ///////////////// Section 2
 //
@@ -95,6 +98,14 @@ if (false) {
 //
 
 // START
+function Person (name, title) {
+  this.name = name;
+  this.title = title;
+
+  this.fullName = () => {
+    return this.title + " " + this.name; //print out the fullname of the person object
+  }
+}
 // END
 
 p = new Person("Betty", "Ms")
@@ -115,6 +126,16 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1 {
+  constructor (name, title) { //person constructor
+    this.name = name;
+    this.title = title;
+  }
+
+  fullName() { //fullname function
+    return this.title + " " + this.name;
+  }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -143,6 +164,24 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(test) {
+   temp = String.prototype.sup;
+
+   String.prototype.sup = function () {
+     return "What's up, " + this + "?";
+   }
+
+   //exception handling
+   try {
+     test();
+   }
+   catch(error) {
+     throw error;
+   }
+   finally {
+    String.prototype.sup = temp;
+   }
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -193,6 +232,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  object = Object.create(constructor.prototype); //create the object and its constructor
+  object.constructor(...args); //take in the arguments for the constructor
+  return object; //return the object
   //END
 }
 
@@ -208,4 +250,3 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
