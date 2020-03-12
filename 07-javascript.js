@@ -2,38 +2,28 @@
 This assignment is broken into a number of sections. You'll want to get each
 section completed before moving on to the next. To make this easier,
 I've included all but the first section inside an
-
   if (false) {
     section
     section...
   }
-
 As you complete a section, move the `if` part of this down past the end of the
 next section, which will then make it live.
-
   section
   if (false) {
     section...
   }
-
 Most sections have their own short description of the problem. However, there is
 one global rule: you can only change the code in this file that lies between the
 markers
-
   // START
-
 and
-
   // END
-
 So, in the following code:
-
   // START
   let a = 3
   let b
   // END
   assert.equal(a+b, 8)
-
 You can change the let statements, but not the assert. (My intent here would be
 for you to make the test pass my initializing b to 5.
 */
@@ -67,6 +57,18 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function() {
+  var newStr = ""
+  for (let i = 0; i < this.length; i++){
+    if('aeiouAEIOU'.includes(this[i])){
+      newStr += "*"
+    }
+    else{
+      newStr += this[i]
+    }
+  }
+  return newStr
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +77,6 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
 
 ///////////////// Section 2
 //
@@ -95,13 +96,21 @@ if (false) {
 //
 
 // START
+
+function Person(name, title){
+  this.name = name
+  this.title = title
+}
+
+Person.prototype.fullName = function(){
+    return(`${this.title} ${this.name}`)
+}
 // END
 
 p = new Person("Betty", "Ms")
 assert.equal(p.name,  "Betty")
 assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
-
 
 ///////////////// Section 3
 //
@@ -115,6 +124,15 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1{
+  constructor(name, title){
+    this.name = name
+    this.title = title
+  }
+  fullName(){
+    return(`${this.title} ${this.name}`)
+  }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -143,6 +161,19 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+tempSave = String.prototype.sup()
+function bugs(func){
+  this.sup = function(){
+    return ("What's up, " + this)
+  }
+  //set things back
+  try{
+    this.sup
+  }
+  finally{
+    this.sup = tempSave
+  }
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -151,7 +182,6 @@ bugs(function() {
   assert.equal("Dave".sup(), "What's up, Dave?")
 })
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
-
 
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
@@ -173,7 +203,6 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -191,8 +220,11 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // Grade: 15
 // Penalty: -2 layout, -2 naming, -5 works but limited
 
+//I DON'T USE "THIS"
 function myNew(constructor, ...args) {
   //START
+  newObj = new constructor(...args)
+  return newObj
   //END
 }
 
@@ -208,4 +240,4 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
+if (false) {}
