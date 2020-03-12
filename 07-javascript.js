@@ -68,14 +68,10 @@ let str5 = "Offensive Word";
 // START
 String.prototype.bowlderize = function() {
   //creates prototype function for all strings
-  var vowles = "aeiouAEIOU"; //creates a string with all vowels upper and lower case
   var newStr = ""; //declares empty string for values to be added into
   for (let i of this) {
-    //loop through character values of string
-    if (vowles.includes(i)) {
-      //checks if current character is a vowel
-      newStr = newStr + "*"; //if i was a vowel add a '*' in its place
-    } else newStr = newStr + i; //if it was a consonant add to string
+    //IM REALLY PROUD OF THIS LINE BUT I USED REGEX TO REPLACE THE VOWELS
+    newStr = this.replace(/[aeiouAEIOU]/g, "*");
   }
   return newStr; //return new bowdlerized string
 };
