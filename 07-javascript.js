@@ -38,8 +38,8 @@ You can change the let statements, but not the assert. (My intent here would be
 for you to make the test pass my initializing b to 5.
 */
 
-const assert = require('assert').strict   // ignore these two. they just
-Error.stackTraceLimit = 2                 // set up the environment
+const assert = require("assert").strict; // ignore these two. they just
+Error.stackTraceLimit = 2; // set up the environment
 
 ///////////////// Section 1
 //
@@ -59,23 +59,38 @@ Error.stackTraceLimit = 2                 // set up the environment
 // Penalties: 1 for poor layout
 //            2 for using Object.assign
 
-
-let str1 = "abc"
-let str2 = "ABC"
-let str3 = "beef"
-let str4 = "briefly"
-let str5 = "Offensive Word"
+let str1 = "abc";
+let str2 = "ABC";
+let str3 = "beef";
+let str4 = "briefly";
+let str5 = "Offensive Word";
 
 // START
+String.prototype.bowlderize = function() {
+  //creates prototype function for all strings
+  var vowles = "aeiouAEIOU"; //creates a string with all vowels upper and lower case
+  var newStr = ""; //declares empty string for values to be added into
+  for (let i of this) {
+    //loop through character values of string
+    if (vowles.includes(i)) {
+      //checks if current character is a vowel
+      newStr = newStr + "*"; //if i was a vowel add a '*' in its place
+    } else newStr = newStr + i; //if it was a consonant add to string
+  }
+  return newStr; //return new bowdlerized string
+};
 // END
 
-assert.equal(str1.bowlderize(), "*bc")
-assert.equal(str2.bowlderize(), "*BC")
-assert.equal(str3.bowlderize(), "b**f")
-assert.equal(str4.bowlderize(), "br**fly")
-assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
+assert.equal(str1.bowlderize(), "*bc");
+assert.equal(str2.bowlderize(), "*BC");
+assert.equal(str3.bowlderize(), "b**f");
+assert.equal(str4.bowlderize(), "br**fly");
+assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd");
 
-if (false) {
+//my own testing
+assert.equal("frick".bowlderize(), "fr*ck");
+assert.equal("darn".bowlderize(), "d*rn");
+assert.equal("heck".bowlderize(), "h*ck");
 
 ///////////////// Section 2
 //
@@ -95,13 +110,27 @@ if (false) {
 //
 
 // START
+function Person(name, title) {
+  //constructor
+  this.name = name; //sets parameter name to name of object
+  this.title = title; //sets parameter title to title of object
+}
+Person.prototype.fullName = function() {
+  //adds fullname function to prototype
+  return this.title + " " + this.name; //concatenates title and name to make full name
+};
 // END
 
-p = new Person("Betty", "Ms")
-assert.equal(p.name,  "Betty")
-assert.equal(p.title, "Ms")
-assert.equal(p.fullName(), "Ms Betty")
+p = new Person("Betty", "Ms");
+assert.equal(p.name, "Betty");
+assert.equal(p.title, "Ms");
+assert.equal(p.fullName(), "Ms Betty");
 
+//my own testing
+p2 = new Person("Carballo", "Ms");
+assert.equal(p2.name, "Carballo");
+assert.equal(p2.title, "Ms");
+assert.equal(p2.fullName(), "Ms Carballo");
 
 ///////////////// Section 3
 //
@@ -113,16 +142,33 @@ assert.equal(p.fullName(), "Ms Betty")
 // Penalty:  -2 for layout
 //           -2 for bad names
 //
-
 //START
+class Person1 {
+  constructor(name, title) {
+    //constructor
+    this.name = name; //sets parameter name to name of object
+    this.title = title; //sets parameter title to title of object
+  }
+
+  fullName() {
+    //creates function that returns full name
+    return this.title + " " + this.name; //concatenates title and name together
+  }
+}
 // END
 
-p = new Person1("Fred", "Mr")
-assert.equal(p.name,  "Fred")
-assert.equal(p.title, "Mr")
-assert.equal(p.fullName(), "Mr Fred")
-assert(p.hasOwnProperty("name"))
+p = new Person1("Fred", "Mr");
+assert.equal(p.name, "Fred");
+assert.equal(p.title, "Mr");
+assert.equal(p.fullName(), "Mr Fred");
+assert(p.hasOwnProperty("name"));
 
+//my own testing
+p2 = new Person("Carballo", "Ms");
+assert.equal(p2.name, "Carballo");
+assert.equal(p2.title, "Ms");
+assert.equal(p2.fullName(), "Ms Carballo");
+assert(p.hasOwnProperty("title"));
 
 ///////////////// Section 4
 //
@@ -143,37 +189,49 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(passedFunc) {
+  var tempSup = String.prototype.sup; //keeps track of original sup() function
+  String.prototype.sup = function() {
+    //assigns new implementation to sup()
+    return "What's up, " + this + "?"; //concatenates the string with the name
+  };
+  try {
+    //code for finally block derived from https://www.w3schools.com/jsref/jsref_try_catch.asp
+    passedFunc(); //call passed in function for testing
+  } catch (err) {
+    throw err;
+  } finally {
+    //allows this code to happen regardless of try catch result
+    String.prototype.sup = tempSup; //assigns original implementation back to sup()
+  }
+}
 //END
 
-assert.equal("doc".sup(), "<sup>doc</sup>")
+assert.equal("doc".sup(), "<sup>doc</sup>");
 bugs(function() {
-  assert.equal("Doc".sup(), "What's up, Doc?")
-  assert.equal("Dave".sup(), "What's up, Dave?")
-})
-assert.equal("DOC".sup(), "<sup>DOC</sup>")
-
-
+  assert.equal("Doc".sup(), "What's up, Doc?");
+  assert.equal("Dave".sup(), "What's up, Dave?");
+});
+assert.equal("DOC".sup(), "<sup>DOC</sup>");
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
 // to `bugs()` throws an exception. You might need to
 // investigate JavaScript exception handling and the
 // `finally` clause.
 
-
 assert.throws(
   () => {
-  bugs(function() {
-    throw new Error("boom")
-  })},
+    bugs(function() {
+      throw new Error("boom");
+    });
+  },
   {
     name: "Error",
     message: "boom"
   }
-)
+);
 
-assert.equal("DOC".sup(), "<sup>DOC</sup>")
-
-
+assert.equal("DOC".sup(), "<sup>DOC</sup>");
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -193,19 +251,23 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  var obj = Object.create(constructor.prototype); //creates new object using existing object
+  obj.constructor(...args); //passes args into newly created object constructor
+  return obj; //returns new object
   //END
 }
 
 function Box(w, h) {
-  this.w = w
-  this.h = h
+  this.w = w;
+  this.h = h;
 }
 Box.prototype.area = function() {
-  return this.w*this.h
-}
+  return this.w * this.h;
+};
 
-box = myNew(Box, 5, 7)
-assert.equal(box.w, 5)
-assert.equal(box.h, 7)
-assert.equal(box.area(), 35)
+box = myNew(Box, 5, 7);
+assert.equal(box.w, 5);
+assert.equal(box.h, 7);
+assert.equal(box.area(), 35);
+if (false) {
 }
