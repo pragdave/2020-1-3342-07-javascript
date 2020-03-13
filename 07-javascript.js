@@ -1,4 +1,6 @@
-/*
+/*Corey Ellis
+
+
 This assignment is broken into a number of sections. You'll want to get each
 section completed before moving on to the next. To make this easier,
 I've included all but the first section inside an
