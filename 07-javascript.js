@@ -170,6 +170,25 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(text){
+  let proto = String.prototype.sup
+
+  String.prototype.sup = function(){
+    return "What's up, " + this + "?"
+  }
+
+  try{
+    text()
+  }
+  catch(error){
+    throw error
+  }
+  finally{
+    String.prototype.sup = proto
+  }
+
+}
+
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -187,7 +206,7 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // investigate JavaScript exception handling and the
 // `finally` clause.
 
-if (false) {
+
 assert.throws(
   () => {
   bugs(function() {
@@ -221,6 +240,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  newObject = Object.create(constructor.prototype)
+  newObject.constructor(...args)
+  return newObject
   //END
 }
 
@@ -236,4 +258,7 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+
+
+if (false) {
 }
