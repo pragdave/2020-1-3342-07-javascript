@@ -161,17 +161,16 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
-tempSave = String.prototype.sup()
 function bugs(func){
-  this.sup = function(){
-    return ("What's up, " + this)
+  let supSave = String.prototype.sup
+  String.prototype.sup = function(){
+    return `What's up, ${this}?`
   }
-  //set things back
   try{
-    this.sup
+    func()
   }
   finally{
-    this.sup = tempSave
+    String.prototype.sup = supSave
   }
 }
 //END
@@ -220,15 +219,15 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // Grade: 15
 // Penalty: -2 layout, -2 naming, -5 works but limited
 
-//I DON'T USE "THIS"
+//START
 function myNew(constructor, ...args) {
-  //START
-  newObj = new constructor(...args)
+  var newObj = Object.create(constructor.prototype)
+  var result = constructor.apply(newObj, args)
   return newObj
-  //END
 }
+//END
 
-function Box(w, h) {
+function Box(w, h){
   this.w = w
   this.h = h
 }
