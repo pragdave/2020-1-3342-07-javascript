@@ -67,6 +67,9 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function() {   // uses prototype to make this point to the current string
+  return this.replace(/a|e|i|o|u/gi,"*") // gi makes function case insensitive 
+}                            //the red indicates that the barriers represent a set of eligible strings to be replaced
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +78,7 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+
 
 ///////////////// Section 2
 //
@@ -95,6 +98,16 @@ if (false) {
 //
 
 // START
+personFunctions = {
+  fullName: function(){ // fullName function that is a proto of person object
+    return this.title + " " + this.name
+  }
+}
+function Person(name, title){ // initiallizes variables
+    this.name = name,
+    this.title = title
+    this.__proto__ = personFunctions // sets object to have function that returns full name
+}
 // END
 
 p = new Person("Betty", "Ms")
@@ -115,6 +128,15 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1{
+  constructor(name, title){
+    this.name = name
+    this.title = title
+  }
+  fullName(){
+    return this.title + " " + this.name
+  }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -143,6 +165,19 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(func){
+  let save = String.prototype.sup // saves original function to variable
+  String.prototype.sup = function(){ // custom function
+    return "What's up, " + this + "?"
+  }
+  try{
+    func() // tries function
+  }
+  finally{ //code here is always run
+    String.prototype.sup = save // resets sup function to original form
+  }
+}
+
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -193,6 +228,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  obj = Object.create(constructor.prototype) // creates the object using pased constructor
+  obj.constructor(...args) // constructs the object
+  return obj
   //END
 }
 
@@ -208,4 +246,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+if (false) {
 }
