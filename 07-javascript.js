@@ -67,15 +67,22 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
-// END
+var vowels = ['a','A','e','E','i','I','o','O','u','U']
 
+String.prototype.bowlderize =  function(){
+  var newS = this.replace(/[aAeEiIoOuU]/g,"*")
+  return newS
+}
+
+
+// END
 assert.equal(str1.bowlderize(), "*bc")
 assert.equal(str2.bowlderize(), "*BC")
 assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+
 
 ///////////////// Section 2
 //
@@ -95,7 +102,17 @@ if (false) {
 //
 
 // START
+function Person(name, title){
+  this.name = name
+  this.title = title
+}
+
+Person.prototype.fullName = function(){
+  return this.title + " " + this.name
+}
+
 // END
+
 
 p = new Person("Betty", "Ms")
 assert.equal(p.name,  "Betty")
@@ -115,6 +132,16 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1{
+  constructor(name, title){
+      this.name = name;
+      this.title = title;
+  }
+
+  fullName(){
+    return this.title + " " + this.name
+  }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -146,6 +173,7 @@ assert(p.hasOwnProperty("name"))
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
+
 bugs(function() {
   assert.equal("Doc".sup(), "What's up, Doc?")
   assert.equal("Dave".sup(), "What's up, Dave?")
@@ -159,7 +187,7 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // investigate JavaScript exception handling and the
 // `finally` clause.
 
-
+if (false) {
 assert.throws(
   () => {
   bugs(function() {
