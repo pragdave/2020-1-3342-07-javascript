@@ -76,7 +76,7 @@ String.prototype.bowlderize = function(){
       retString = retString.replace(vowels[vow], "*")
     }
   }
-  console.log(".")
+  
   return retString
 
 }
@@ -88,7 +88,7 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+
 
 ///////////////// Section 2
 //
@@ -108,6 +108,20 @@ if (false) {
 //
 
 // START
+console.log("section 1 complete")
+
+
+function Person(name, title){
+  this.name = name
+  this.title = title
+
+}
+
+Person.prototype.fullName = 
+  function(){
+    return this.title + " " + this.name
+  }
+
 // END
 
 p = new Person("Betty", "Ms")
@@ -128,6 +142,20 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+console.log("section 2 complete")
+
+class Person1{
+  constructor(name, title){
+    this.name = name
+    this.title = title
+  }
+
+  fullName(){
+    return this.title + " " + this.name
+  }
+
+}
+
 // END
 
 p = new Person1("Fred", "Mr")
@@ -135,7 +163,6 @@ assert.equal(p.name,  "Fred")
 assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
-
 
 ///////////////// Section 4
 //
@@ -156,6 +183,26 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+console.log("section 3 complete")
+
+function bugs(func){
+  let holder = String.prototype.sup
+try{
+  func
+  String.prototype.sup = function(){
+    return "What's up " + this + "?"
+    }
+}
+catch(Error){
+    String.prototype.sup = holder
+    throw new Error("boom")
+  }
+finally{
+  String.prototype.sup = holder
+  }
+}
+
+console.log("section 4 complete besides assert.throws")
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -164,7 +211,6 @@ bugs(function() {
   assert.equal("Dave".sup(), "What's up, Dave?")
 })
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
-
 
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
@@ -186,7 +232,6 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -206,6 +251,12 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  console.log("Section 5 complete")
+  return new constructor(...args) 
+
+  this.constructor = constructor(...args)
+  return this
+
   //END
 }
 
@@ -221,4 +272,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+if (false) {
 }
