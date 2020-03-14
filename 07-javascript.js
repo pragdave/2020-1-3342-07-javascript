@@ -67,21 +67,11 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
-/*
-function String(str) {
-  this.str = str
-}
-*/
+
 String.prototype.bowlderize= function(){
    return this.replace(/[aeiouAEIOU]/g,"*");
  }
-/*
-str1=new String(str1)
-str2=new String(str2)
-str3=new String(str3)
-str4=new String(str4)
-str5=new String(str5)
-*/
+
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -112,7 +102,6 @@ assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
   function Person(name,title,fullName){
     this.name=name
     this.title=title
-    //fullName
   }
 
   Person.prototype.fullName=function(){
@@ -178,6 +167,10 @@ assert(p.hasOwnProperty("name"))
 
 
 //START
+
+/*following w3schools example 
+for try-catch-finally blocks*/
+
 let supreset=String.prototype.sup
  bugs=function (ehhh) {
     String.prototype.sup= function(){
@@ -249,7 +242,7 @@ function myNew(constructor, ...args) {
   /*Found under Construction Functions 
   and the new operator ;) */
 
-    myNewObj=Object.create(myNew.prototype)
+    myNewObj=Object.create(constructor.prototype)
     myNewObj.constructor(...args)
     return myNewObj
   //END
