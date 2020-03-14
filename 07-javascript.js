@@ -68,10 +68,19 @@ let str5 = "Offensive Word"
 
 // START
 
-function bowlderize() {
-  this.str = str.replace(/[aeiou]/g,"*");
+function String(str) {
+  this.str = str
 }
 
+String.prototype.bowlderize= function(){
+   return this.replace(/[aeiouAEIOU]/g,"*");
+ }
+
+str1=new String(str1)
+str2=new String(str2)
+str3=new String(str3)
+str4=new String(str4)
+str5=new String(str5)
 
 // END
 
@@ -80,8 +89,6 @@ assert.equal(str2.bowlderize(), "*BC")
 assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
-
-
 
 ///////////////// Section 2
 //
@@ -140,7 +147,7 @@ assert.equal(p.fullName(), "Ms Betty")
       return this.title+' '+this.name
     }
     hasOwnProperty(){
-        return "name" //don't know for sure if this is right?
+      return "name"
     }
   }
 // END
@@ -150,7 +157,6 @@ assert.equal(p.name,  "Fred")
 assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
-
 
 ///////////////// Section 4
 //
@@ -170,20 +176,25 @@ assert(p.hasOwnProperty("name"))
 // Grading: 20 points to pass tests
 // Penalty: -3 layout, -3 naming
 
-//START
-try{
-  var ehhh= function bugs (){
-    var str=`What's up ${ehhh}`
-    console.log(str.sup())
-    return str.sup()
-  }
 
-  //bugs(String())
-}catch(err){
-  
+//START
+let supreset=String.prototype.sup
+ bugs=function (ehhh) {
+    String.prototype.sup= function(){
+        return `What's up, ${this}?`
+
+    }
+try{
+   ehhh()
 }
-finally{
+catch(err){
+  throw err
 }
+  finally{
+    //set back to normal here
+    String.prototype.sup=supreset
+  }
+ }
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -215,7 +226,6 @@ assert.throws(
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 
-if (false) {
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -236,6 +246,12 @@ if (false) {
 function myNew(constructor, ...args) {
   //START
   
+  /*Found under Construction Functions 
+  and the new operator ;) */
+
+    myNewObj=Object.create(myNew.prototype)
+    myNewObj.constructor(...args)
+    return myNewObj
   //END
 }
 
@@ -251,4 +267,4 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
+if (false) {}
