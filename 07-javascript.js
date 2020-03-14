@@ -67,6 +67,16 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+
+String.prototype.bowlderize = function(){
+ 
+  let copiedString = this.slice(0);
+  let stringNoVowels = copiedString.replace(/[aeiou]/ig, '*');
+  return stringNoVowels;
+
+}
+
+
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +85,7 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+//if (false) {
 
 ///////////////// Section 2
 //
@@ -95,6 +105,18 @@ if (false) {
 //
 
 // START
+
+function Person(name, title){
+  this.name = name;
+  this.title = title;
+ 
+
+  Person.prototype.fullName = function fullName() {
+      return this.title + " " + this.name
+  } 
+
+}//end Person constructor 
+
 // END
 
 p = new Person("Betty", "Ms")
@@ -103,6 +125,8 @@ assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
 
 
+
+//if (false) {
 ///////////////// Section 3
 //
 // Reimplement the code from section 2 using the ES2015
@@ -115,6 +139,19 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+
+class Person1{
+
+  constructor(name,title){
+      this.name = name
+      this.title =title
+  }
+
+  fullName() {
+      return this.title + " " + this.name
+  } 
+
+}//end class
 // END
 
 p = new Person1("Fred", "Mr")
@@ -123,7 +160,7 @@ assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 
-
+//if (false) {
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
@@ -143,6 +180,26 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+ 
+
+function bugs(functionIn) {
+  
+    let originalSup = String.prototype.sup;
+    
+    String.prototype.sup = function(){  
+      return "What's up, " + this + "?";
+    }
+    
+    try{
+      functionIn();
+    }
+
+    finally{
+      String.prototype.sup = originalSup;
+    }
+ 
+}
+
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -173,7 +230,7 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-
+//if (false) {
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -193,6 +250,11 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+
+  constructor(...args);
+  this.__proto__ = constructor.prototype
+  return this;
+  
   //END
 }
 
@@ -208,4 +270,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+if (false) {
 }
