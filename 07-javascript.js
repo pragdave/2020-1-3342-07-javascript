@@ -135,9 +135,6 @@ assert.equal(p.fullName(), "Ms Betty")
     fullName(){
       return this.title+' '+this.name
     }
-    hasOwnProperty(){
-      return "name"
-    }
   }
 // END
 
