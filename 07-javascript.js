@@ -163,18 +163,18 @@ assert(p.hasOwnProperty("name"))
 
 //START
 function bugs(test){
-  var proto = String.prototype.sup
+  var saveSup = String.prototype.sup //save function
   String.prototype.sup = function(){
     return "What's up, " + this + "?"
   }
   try{
-    test();
+    test()
   }
-  catch(err){
-    throw err
+  catch(error){
+    throw error
   }
   finally{
-    String.prototype.sup = proto
+    String.prototype.sup = saveSup
   }
 }
 //END
@@ -228,7 +228,7 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 function myNew(constructor, ...args) {
   //START
   myObject = Object.create(constructor.prototype)
-  constructor.apply(myObject, args)
+  myObject.constructor(...args)
   return myObject
   //END
 }
