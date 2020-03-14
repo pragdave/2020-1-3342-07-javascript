@@ -67,21 +67,21 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
-
+/*
 function String(str) {
   this.str = str
 }
-
+*/
 String.prototype.bowlderize= function(){
    return this.replace(/[aeiouAEIOU]/g,"*");
  }
-
+/*
 str1=new String(str1)
 str2=new String(str2)
 str3=new String(str3)
 str4=new String(str4)
 str5=new String(str5)
-
+*/
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
