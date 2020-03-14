@@ -67,7 +67,7 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
-/*
+
 function bowlderize() {
   this.str = str.replace(/[aeiou]/g,"*");
 }
@@ -81,7 +81,7 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-*/
+
 
 ///////////////// Section 2
 //
