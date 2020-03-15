@@ -81,7 +81,7 @@ assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
 //completed LJH
 
-if (false) {
+
 
 ///////////////// Section 2
 //
@@ -101,6 +101,17 @@ if (false) {
 //
 
 // START
+function Person(name, title) {
+  let newPerson = {
+    name: name,
+    title: title
+  }
+  newPerson.fullName = function(){
+    return this.title + " " + this.name
+  }
+  return newPerson
+
+}
 // END
 
 p = new Person("Betty", "Ms")
@@ -108,7 +119,9 @@ assert.equal(p.name,  "Betty")
 assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
 
+//completed LJH
 
+if (false) {
 ///////////////// Section 3
 //
 // Reimplement the code from section 2 using the ES2015
