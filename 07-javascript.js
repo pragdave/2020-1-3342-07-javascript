@@ -67,6 +67,19 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function () {
+  let temp;
+  let newString = "";
+  for(let i = 0; i < this.length; ++i){
+    temp = this[i].toLowerCase();
+    if(temp == 'a' || temp == 'e' || temp == 'i' || temp == 'o' || temp == 'u'){
+      newString += '*';
+    }else{
+      newString += this[i];
+    }
+  }
+  return newString;
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -74,8 +87,6 @@ assert.equal(str2.bowlderize(), "*BC")
 assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
-
-if (false) {
 
 ///////////////// Section 2
 //
@@ -95,6 +106,13 @@ if (false) {
 //
 
 // START
+function Person(name, title){
+  this.name = name;
+  this.title = title;
+}
+Person.prototype.fullName = function() {
+  return this.title + " " + this.name;
+}
 // END
 
 p = new Person("Betty", "Ms")
@@ -115,6 +133,15 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1{
+  constructor(name, title){
+    this.name = name;
+    this.title = title;
+  }
+  fullName(){
+    return this.title + " " + this.name;
+  }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -122,7 +149,6 @@ assert.equal(p.name,  "Fred")
 assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
-
 
 ///////////////// Section 4
 //
@@ -143,6 +169,19 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs (func){
+  String.prototype.sup = function(){
+    return "What's up, " + this + "?";
+  }
+  try{
+    func()
+  }
+  finally{
+    String.prototype.sup = function(){
+      return "<sup>" + this + "</sup>";
+    }
+  }
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -173,7 +212,6 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -193,6 +231,7 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  return new constructor(...args);
   //END
 }
 
@@ -208,4 +247,3 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
