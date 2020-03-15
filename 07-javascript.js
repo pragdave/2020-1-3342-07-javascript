@@ -251,9 +251,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 function myNew(constructor, ...args) {
   //START
 
-  constructor(...args)
-  this.__proto__ = constructor.prototype
-  return this
+  let newObj = Object.create(constructor.prototype);
+  constructor.call(newObj,...args);
+  return newObj;
   
   //END
 }
