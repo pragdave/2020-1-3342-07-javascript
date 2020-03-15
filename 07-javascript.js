@@ -196,7 +196,7 @@ function bugs(tryTest){
 
   String.prototype.sup = function(){
 
-    return "What's up, " + this + "?"
+    return `What's up, ${this}?`
 
   }//end new sup
 
@@ -273,7 +273,7 @@ if(false){
 function myNew(constructor, ...args) {
   //START
 
-  myObj = Object.create(constructor.prototype)
+  let myObj = Object.create(constructor.prototype)
   myObj.constructor(...args)
   return myObj
 
@@ -292,4 +292,8 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+}
+
+if(false){
+  console.log("needs work")
 }
