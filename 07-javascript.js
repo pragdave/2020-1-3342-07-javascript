@@ -67,6 +67,10 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function(){
+  let newStr = this.replace(/[aeiou]/gi, "*")
+  return newStr
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -74,6 +78,8 @@ assert.equal(str2.bowlderize(), "*BC")
 assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
+
+//completed LJH
 
 if (false) {
 
