@@ -151,7 +151,7 @@ assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 console.log('Section 3 passed')
 
-if (false) {
+
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
@@ -171,7 +171,20 @@ if (false) {
 // Penalty: -3 layout, -3 naming
 
 //START
+let originalSup = String.prototype.sup; // keeping track of original
+  function bugs(func){
+    String.prototype.sup = function(){       // overwriting original
+      return `What's up, ${this.valueOf()}?`
+    }
+    try{              // check for error
+      func() 
+    }
+    finally{
+      String.prototype.sup = originalSup //if error or not, go back to original
+    }
+  }
 //END
+
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
 bugs(function() {
@@ -221,6 +234,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  this.valueOf = constructor(...args) //create obj
+  Object.assign(this.constructor.prototype, constructor.prototype)// mixin
+  return this
   //END
 }
 
@@ -236,4 +252,4 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
+if (false) {}
