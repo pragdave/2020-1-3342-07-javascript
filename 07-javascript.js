@@ -67,6 +67,24 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function (){
+  var temp = this;
+  var newStr = "";
+  for(var i = 0; i < temp.length; i++)
+  {
+      if(isVowel(temp[i])){
+        newStr += "*"
+      }
+      else{
+        newStr += temp[i]
+      }
+  }
+  return newStr
+}
+
+function isVowel(char) {
+  return 'AEIOUaeiou'.includes(char);
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +93,7 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+
 
 ///////////////// Section 2
 //
@@ -96,6 +114,14 @@ if (false) {
 
 // START
 // END
+function Person(name, title) {
+  this.name = name;
+  this.title = title;
+}
+
+Person.prototype.fullName = function () {
+  return this.title + " " + this.name;
+}
 
 p = new Person("Betty", "Ms")
 assert.equal(p.name,  "Betty")
@@ -116,6 +142,17 @@ assert.equal(p.fullName(), "Ms Betty")
 
 //START
 // END
+
+class Person1 {
+  constructor(name, title) {
+    this.name = name;
+    this.title = title;
+  }
+  fullName(){
+    return this.title + " " + this.name;
+  }
+
+}
 
 p = new Person1("Fred", "Mr")
 assert.equal(p.name,  "Fred")
@@ -145,6 +182,25 @@ assert(p.hasOwnProperty("name"))
 //START
 //END
 
+function bugs(funct) {
+  var fin = String.prototype.sup
+  
+  String.prototype.sup = function(){
+    return "What's up, " + this + "?";
+  }
+  
+  try{
+    funct();
+  }
+  catch(error){
+    throw error;
+  }
+  finally{
+    String.prototype.sup = fin;
+  }
+  
+}
+
 assert.equal("doc".sup(), "<sup>doc</sup>")
 bugs(function() {
   assert.equal("Doc".sup(), "What's up, Doc?")
@@ -158,7 +214,6 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // to `bugs()` throws an exception. You might need to
 // investigate JavaScript exception handling and the
 // `finally` clause.
-
 
 assert.throws(
   () => {
@@ -193,6 +248,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  newBox = Object.create(constructor.prototype)
+  newBox.constructor(...args)
+  return newBox
   //END
 }
 
@@ -208,4 +266,3 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
