@@ -164,21 +164,18 @@ assert(p.hasOwnProperty("name"))
 
 //START
 function bugs(callback) {
-
-  callback = function(){
-    String.prototype.sup = function(){
-      return `<sup>${this}</sup>`
-    }
+  String.prototype.sup = function(){
+    return `What's up, ${this}?`
   }
-
+  
   try{
-    String.prototype.sup = function(){
-      return `What's up, ${this}?`
-    }
+    callback()
   }
   
   finally{
-    callback()
+    String.prototype.sup = function(){
+      return `<sup>${this}</sup>`
+    }
   }
 }
 
