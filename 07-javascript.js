@@ -1,3 +1,8 @@
+/*  
+Name: John Park
+ID:   446 88 167
+*/
+
 /*
 This assignment is broken into a number of sections. You'll want to get each
 section completed before moving on to the next. To make this easier,
@@ -59,7 +64,6 @@ Error.stackTraceLimit = 2                 // set up the environment
 // Penalties: 1 for poor layout
 //            2 for using Object.assign
 
-
 let str1 = "abc"
 let str2 = "ABC"
 let str3 = "beef"
@@ -67,6 +71,15 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function() {
+    text = this.toString()
+               .split('')
+               .map(char => {
+                   if('aeiouAEIOU'.includes(char)) return '*'
+                   else return char
+               })
+    return text.join('')
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -74,8 +87,6 @@ assert.equal(str2.bowlderize(), "*BC")
 assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
-
-if (false) {
 
 ///////////////// Section 2
 //
@@ -95,13 +106,20 @@ if (false) {
 //
 
 // START
+let Person = function(name, title) {
+    this.name = name
+    this.title = title
+    this.fullName()
+}
+Person.prototype.fullName = function() {
+    return this.title + ' ' + this.name
+}
 // END
 
 p = new Person("Betty", "Ms")
 assert.equal(p.name,  "Betty")
 assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
-
 
 ///////////////// Section 3
 //
@@ -115,6 +133,15 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1 {
+    constructor(name, title) {
+        this.name = name
+        this.title = title
+    }
+    fullName() {
+        return this.title + ' ' + this.name
+    }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -122,7 +149,6 @@ assert.equal(p.name,  "Fred")
 assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
-
 
 ///////////////// Section 4
 //
@@ -143,6 +169,15 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(callback) {
+    
+    String.prototype.sup = function(){
+        return `What's up, ${this.toString()}?`
+    }
+
+    //return `What's up, ${this.toString()}?`
+    if(typeof callback=='function') callback()
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -152,6 +187,7 @@ bugs(function() {
 })
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
+if (false) {
 
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
