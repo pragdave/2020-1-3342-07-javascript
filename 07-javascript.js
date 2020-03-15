@@ -67,6 +67,10 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bolderize = function(){
+	let newSTR = this.replace(/[aeiou]/gi, "*")
+	return newSTR
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
