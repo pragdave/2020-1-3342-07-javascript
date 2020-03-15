@@ -65,8 +65,13 @@ let str2 = "ABC"
 let str3 = "beef"
 let str4 = "briefly"
 let str5 = "Offensive Word"
+//https://stackoverflow.com/questions/13829289/javascript-strip-vowels
 
 // START
+String.prototype.bowlderize = function(){
+let newStr = this.replace(/[aeiou]/ig,'*')
+return newStr
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +80,7 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+
 
 ///////////////// Section 2
 //
@@ -102,7 +107,7 @@ assert.equal(p.name,  "Betty")
 assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
 
-
+if (false) {
 ///////////////// Section 3
 //
 // Reimplement the code from section 2 using the ES2015
