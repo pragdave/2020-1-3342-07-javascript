@@ -250,7 +250,6 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 
 
-
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -267,8 +266,6 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 //
 // Grade: 15
 // Penalty: -2 layout, -2 naming, -5 works but limited
-
-if(false){
 
 function myNew(constructor, ...args) {
   //START
@@ -292,8 +289,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
 
-if(false){
-  console.log("needs work")
-}
+
