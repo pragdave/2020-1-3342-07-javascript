@@ -67,6 +67,24 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function() {
+  let censoredStr = ''
+  loweredStr = this.toLowerCase()
+  for (var i = 0; i < this.length; i++)
+  {
+    if (
+      loweredStr[i] == 'a' ||
+      loweredStr[i] == 'e' ||
+      loweredStr[i] == 'i' ||
+      loweredStr[i] == 'o' ||
+      loweredStr[i] == 'u'
+    )
+      censoredStr += '*'
+    else
+      censoredStr += this[i]
+  } // end for
+  return censoredStr
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +93,6 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
 
 ///////////////// Section 2
 //
@@ -95,6 +112,14 @@ if (false) {
 //
 
 // START
+function Person(name, title) {
+  this.name = name
+  this.title = title
+}
+
+Person.prototype.fullName = function() {
+  return this.title + " " + this.name
+}
 // END
 
 p = new Person("Betty", "Ms")
@@ -103,7 +128,7 @@ assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
 
 
-///////////////// Section 3
+  ///////////////// Section 3
 //
 // Reimplement the code from section 2 using the ES2015
 // `class` syntax. Call the class `Person1` so the name
@@ -115,6 +140,15 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1 {
+  constructor(name, title) {
+    this.name = name
+    this.title = title
+  }
+  fullName() {
+    return this.title + " " + this.name
+  }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -124,7 +158,7 @@ assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 
 
-///////////////// Section 4
+  ///////////////// Section 4
 //
 // The built-in String class defines an instance method
 // `sup()` that wraps the string in HTML <sup> tags.
@@ -143,6 +177,19 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs (f) {
+  String.prototype.sup = function() {
+    return "What\'s up, " + this + "?"
+  }
+  try {
+    f()
+  }
+  finally {
+    String.prototype.sup = function() {
+      return "<sup>" + this + "</sup>"
+    }
+  }
+} // end bugs
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -193,6 +240,7 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  return new constructor(...args)
   //END
 }
 
@@ -208,4 +256,3 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
