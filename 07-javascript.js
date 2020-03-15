@@ -219,7 +219,6 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-if (false) {
 
 ///////////////// Section 5
 //
@@ -240,6 +239,9 @@ if (false) {
 
 function myNew(constructor, ...args) {
   //START
+  let newObject = Object.create(constructor.prototype)
+  constructor.call(newObject, ...args)
+  return newObject
   //END
 }
 
@@ -255,4 +257,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+if (false) {
 }
