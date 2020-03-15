@@ -121,7 +121,7 @@ assert.equal(p.fullName(), "Ms Betty")
 
 //completed LJH
 
-if (false) {
+
 ///////////////// Section 3
 //
 // Reimplement the code from section 2 using the ES2015
@@ -134,6 +134,16 @@ if (false) {
 //
 
 //START
+class Person1 {
+  constructor(name, title){
+    this.name = name,
+    this.title = title
+  }
+  fullName(){
+    return this.title + " " + this.name
+  }
+}
+
 // END
 
 p = new Person1("Fred", "Mr")
@@ -142,7 +152,9 @@ assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 
+//completed LJH
 
+if (false) {
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
