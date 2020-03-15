@@ -67,7 +67,15 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
-// END
+
+String.prototype.bowlderize = function(){
+
+  return this.replace(/A|a|E|e|I|i|O|o|U|u/g, "*")
+
+}//end bowlderize function
+
+
+//END
 
 assert.equal(str1.bowlderize(), "*bc")
 assert.equal(str2.bowlderize(), "*BC")
@@ -75,7 +83,6 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
 
 ///////////////// Section 2
 //
@@ -95,6 +102,23 @@ if (false) {
 //
 
 // START
+
+
+//function to set a person's name and title
+function Person (name, title){
+
+  this.name = name
+  this.title = title
+
+}//end Person function
+
+//function to combine a person's name and title into their full name
+Person.prototype.fullName = function(){
+
+  return (this.title + " " + this.name)
+
+}//end fullName function
+
 // END
 
 p = new Person("Betty", "Ms")
@@ -114,8 +138,30 @@ assert.equal(p.fullName(), "Ms Betty")
 //           -2 for bad names
 //
 
+
+
 //START
+
+class Person1{
+
+  constructor(name, title){
+
+    this.title = title
+    this.name = name
+
+  }//end constructor
+
+
+  fullName(){
+
+    return (this.title + " " + this.name)
+
+  }//end fullName
+
+}//end Person1
+
 // END
+
 
 p = new Person1("Fred", "Mr")
 assert.equal(p.name,  "Fred")
@@ -143,6 +189,35 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+
+function bugs(tryTest){
+
+  var priorSupFunc = String.prototype.sup
+
+  String.prototype.sup = function(){
+
+    return "What's up, " + this + "?"
+
+  }//end new sup
+
+
+try {
+
+  tryTest()
+
+}//end try
+
+//reset string
+finally{
+
+  String.prototype.sup = priorSupFunc
+
+}//end finally
+
+}//end bugs
+
+
+
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -174,6 +249,8 @@ assert.throws(
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 
+
+
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -191,8 +268,15 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // Grade: 15
 // Penalty: -2 layout, -2 naming, -5 works but limited
 
+if(false){
+
 function myNew(constructor, ...args) {
   //START
+
+  myObj = Object.create(constructor.prototype)
+  myObj.constructor(...args)
+  return myObj
+
   //END
 }
 
