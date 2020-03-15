@@ -67,6 +67,16 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function(){
+  let re = /[aeiou]/i
+  let bowlderizedWord = []
+  for(let char of this){
+    re.test(char)? 
+      bowlderizedWord.push("*"):
+      bowlderizedWord.push(char);
+  }
+  return bowlderizedWord.join("")
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -74,8 +84,7 @@ assert.equal(str2.bowlderize(), "*BC")
 assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
-
-if (false) {
+console.log('Section 1 passed')
 
 ///////////////// Section 2
 //
@@ -95,12 +104,21 @@ if (false) {
 //
 
 // START
+function Person(firstName, title){
+  this.name = firstName
+  this.title = title
+}
+Person.prototype.fullName = function(){
+  return `${this.title} ${this.name}`
+}
 // END
 
 p = new Person("Betty", "Ms")
 assert.equal(p.name,  "Betty")
 assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
+console.log('Section 2 passed')
+
 
 
 ///////////////// Section 3
@@ -115,6 +133,15 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1{
+  constructor(firstName, title){
+    this.name = firstName
+    this.title = title
+  }
+  fullName(){
+    return `${this.title} ${this.name}`
+  }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -122,8 +149,9 @@ assert.equal(p.name,  "Fred")
 assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
+console.log('Section 3 passed')
 
-
+if (false) {
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
