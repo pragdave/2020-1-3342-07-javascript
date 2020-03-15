@@ -65,8 +65,8 @@ let str2 = "ABC"
 let str3 = "beef"
 let str4 = "briefly"
 let str5 = "Offensive Word"
-//https://stackoverflow.com/questions/13829289/javascript-strip-vowels
 
+//Code sourced from: https://stackoverflow.com/questions/13829289/javascript-strip-vowels
 // START
 String.prototype.bowlderize = function(){
 let newStr = this.replace(/[aeiou]/ig,'*')
@@ -168,6 +168,20 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(whatsUp){
+  backup = String.prototype.sup
+  String.prototype.sup = function(){
+    return "What's up, " + this + "?"
+  }
+  try{
+    whatsUp()
+  }
+  finally{String.prototype.sup = backup}
+
+
+
+
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -198,7 +212,7 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-if (false) {
+
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -218,6 +232,9 @@ if (false) {
 
 function myNew(constructor, ...args) {
   //START
+let obj = Object.create(constructor.prototype)
+constructor.apply(obj,args)
+return obj
   //END
 }
 
@@ -233,4 +250,4 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
+if (false) {}
