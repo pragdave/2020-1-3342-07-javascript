@@ -100,6 +100,15 @@ assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 //
 
 // START
+function Person(name,title){
+  this.name = name
+  this.title = title
+}
+
+Person.prototype.fullName = function(){
+  let fName =  this.title + " " + this.name
+  return fName
+}
 // END
 
 p = new Person("Betty", "Ms")
@@ -107,7 +116,7 @@ assert.equal(p.name,  "Betty")
 assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
 
-if (false) {
+
 ///////////////// Section 3
 //
 // Reimplement the code from section 2 using the ES2015
@@ -128,7 +137,7 @@ assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 
-
+if (false) {
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
