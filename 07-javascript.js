@@ -84,7 +84,6 @@ assert.equal(str2.bowlderize(), "*BC")
 assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
-console.log('Section 1 passed')
 
 ///////////////// Section 2
 //
@@ -117,7 +116,6 @@ p = new Person("Betty", "Ms")
 assert.equal(p.name,  "Betty")
 assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
-console.log('Section 2 passed')
 
 
 
@@ -149,7 +147,6 @@ assert.equal(p.name,  "Fred")
 assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
-console.log('Section 3 passed')
 
 
 ///////////////// Section 4
