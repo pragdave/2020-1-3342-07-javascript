@@ -2,46 +2,38 @@
 This assignment is broken into a number of sections. You'll want to get each
 section completed before moving on to the next. To make this easier,
 I've included all but the first section inside an
-
   if (false) {
     section
     section...
   }
-
 As you complete a section, move the `if` part of this down past the end of the
 next section, which will then make it live.
-
   section
   if (false) {
     section...
   }
-
 Most sections have their own short description of the problem. However, there is
 one global rule: you can only change the code in this file that lies between the
 markers
-
   // START
-
 and
-
   // END
-
 So, in the following code:
-
   // START
   let a = 3
   let b
   // END
   assert.equal(a+b, 8)
-
 You can change the let statements, but not the assert. (My intent here would be
 for you to make the test pass my initializing b to 5.
 */
-
 const assert = require('assert').strict   // ignore these two. they just
 Error.stackTraceLimit = 2                 // set up the environment
 
+ 
+
 ///////////////// Section 1
+
 //
 // For some reason, some publishers seem to believe that by replacing
 // vowels with asterisks in "offensive" words, they are sparing their
@@ -59,6 +51,7 @@ Error.stackTraceLimit = 2                 // set up the environment
 // Penalties: 1 for poor layout
 //            2 for using Object.assign
 
+ 
 
 let str1 = "abc"
 let str2 = "ABC"
@@ -66,8 +59,32 @@ let str3 = "beef"
 let str4 = "briefly"
 let str5 = "Offensive Word"
 
+ 
+
 // START
+
+String.prototype.bowlderize = function()
+
+{
+
+        var withoutVowels = "";
+        for (var i = 0; i < this.length; i++) {
+            if (!isVowel(this[i])) {
+              withoutVowels += this[i];
+            }
+            else{
+                withoutVowels += "*"
+            }
+          }
+          return withoutVowels;    
+}
+
+function isVowel(char) {
+    return 'aeiouAEIOU'.includes(char);
+  }
 // END
+
+ 
 
 assert.equal(str1.bowlderize(), "*bc")
 assert.equal(str2.bowlderize(), "*BC")
@@ -75,9 +92,11 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+
+
 
 ///////////////// Section 2
+
 //
 // Write a constructor function and any associated code
 // to implement a Person class. The constructor takes a name
@@ -94,14 +113,26 @@ if (false) {
 //           -3 for bad names
 //
 
+ 
+
 // START
+
+function Person(name,title)
+{
+    this.name = name
+    this.title = title
+}
+Person.prototype.fullName = function()
+{
+    return (this.title +" "+ this.name)
+}
 // END
 
 p = new Person("Betty", "Ms")
 assert.equal(p.name,  "Betty")
 assert.equal(p.title, "Ms")
 assert.equal(p.fullName(), "Ms Betty")
-
+ 
 
 ///////////////// Section 3
 //
@@ -114,8 +145,28 @@ assert.equal(p.fullName(), "Ms Betty")
 //           -2 for bad names
 //
 
+ 
+
 //START
+
+class Person1 {
+    constructor(name, title) 
+    {
+      this.name = name;
+      this.title = title;
+    }
+    get fullName()
+    {
+        return this.fullName()
+    }
+    fullName()
+    {
+        return (this.title +" "+ this.name)
+    }
+  }
 // END
+
+ 
 
 p = new Person1("Fred", "Mr")
 assert.equal(p.name,  "Fred")
@@ -123,6 +174,7 @@ assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 
+ 
 
 ///////////////// Section 4
 //
@@ -141,17 +193,36 @@ assert(p.hasOwnProperty("name"))
 //
 // Grading: 20 points to pass tests
 // Penalty: -3 layout, -3 naming
-
+//catch(err){
+  //console.log(err)
+//}f
 //START
-//END
 
+
+function bugs(callback)
+{
+  
+  let OriginalSup = String.prototype.sup
+  let ModifiedSup = function(){
+    return ("What's up, "+this+"?")
+  }
+  try{
+      String.prototype.sup = ModifiedSup
+      callback()
+    }finally{
+      String.prototype.sup = OriginalSup
+    }
+}
+//END
 assert.equal("doc".sup(), "<sup>doc</sup>")
+
 bugs(function() {
   assert.equal("Doc".sup(), "What's up, Doc?")
   assert.equal("Dave".sup(), "What's up, Dave?")
 })
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
+ 
 
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
@@ -159,6 +230,7 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // investigate JavaScript exception handling and the
 // `finally` clause.
 
+ 
 
 assert.throws(
   () => {
@@ -170,9 +242,11 @@ assert.throws(
     message: "boom"
   }
 )
-
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
+
+
+ 
 
 ///////////////// Section 5
 //
@@ -183,7 +257,7 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // constructor function to run (setting `this`, and returning that `this` value
 // to the caller.
 //
-// This only needs to work on constructor functions: you don;t need to consider
+// This only needs to work on constructor functions: you don't need to consider
 // the `class` syntax.
 //
 // Hint: it's 3 lines of code
@@ -191,21 +265,42 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // Grade: 15
 // Penalty: -2 layout, -2 naming, -5 works but limited
 
+ 
+
 function myNew(constructor, ...args) {
+
   //START
+  var obj, ret, proto;
+  proto = Object(constructor.prototype) === constructor.prototype ? constructor.prototype : Object.prototype;
+  obj = Object.create(proto);
+  ret = constructor.apply(obj, Array.prototype.slice.call(arguments, 1));
+  if (Object(ret) === ret)
+   {
+    return ret;
+  }
+  return obj;
   //END
 }
+
+ 
 
 function Box(w, h) {
   this.w = w
   this.h = h
+
 }
+
 Box.prototype.area = function() {
   return this.w*this.h
+
 }
+
+ 
 
 box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+
+if (false) {
 }
