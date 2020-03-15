@@ -129,6 +129,17 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1{
+
+  constructor(name,title){
+    this.name = name
+    this.title = title
+  }
+  fullName(){
+    return this.title + " " + this.name
+  }
+}
+
 // END
 
 p = new Person1("Fred", "Mr")
@@ -137,7 +148,7 @@ assert.equal(p.title, "Mr")
 assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 
-if (false) {
+
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
@@ -187,7 +198,7 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-
+if (false) {
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
