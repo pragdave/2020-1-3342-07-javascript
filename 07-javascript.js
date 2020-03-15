@@ -154,7 +154,7 @@ assert(p.hasOwnProperty("name"))
 
 //completed LJH
 
-if (false) {
+
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
@@ -174,6 +174,14 @@ if (false) {
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(func){
+  func() = function() { 
+    let str = this.toString();
+    let newStr = str.replace(/<[^>]*>/g, '');
+    return "What's up, " + newStr + "?" 
+  }
+}
+
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -204,7 +212,7 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-
+if (false) {
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -223,7 +231,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 // Penalty: -2 layout, -2 naming, -5 works but limited
 
 function myNew(constructor, ...args) {
-  //START
+  // //START
+  // this = new constructor(...args)
+  // return this
   //END
 }
 
