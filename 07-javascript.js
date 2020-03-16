@@ -178,6 +178,24 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+
+function bugs(changeSup)
+{
+    var temp = String.prototype.sup
+    
+    String.prototype.sup = function(){
+      return `What's up, ${this}?`
+    }
+
+    try{
+      changeSup()
+    }
+    finally{
+      String.prototype.sup = temp
+    }
+  
+}
+
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -208,7 +226,7 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-if (false) {
+
 
 ///////////////// Section 5
 //
@@ -229,6 +247,9 @@ if (false) {
 
 function myNew(constructor, ...args) {
   //START
+  let temp2 = Object.create(constructor.prototype)
+  temp2.constructor(...args)
+  return temp2
   //END
 }
 
@@ -244,4 +265,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+if (false) {
 }
