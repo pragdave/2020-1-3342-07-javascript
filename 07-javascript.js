@@ -1,41 +1,10 @@
-/*
-This assignment is broken into a number of sections. You'll want to get each
-section completed before moving on to the next. To make this easier,
-I've included all but the first section inside an
+/*Austin Smith
+Programming Languages CS 3342
+Homework 4 - JavaScript 07
+March 15th 2020
 
-  if (false) {
-    section
-    section...
-  }
-
-As you complete a section, move the `if` part of this down past the end of the
-next section, which will then make it live.
-
-  section
-  if (false) {
-    section...
-  }
-
-Most sections have their own short description of the problem. However, there is
-one global rule: you can only change the code in this file that lies between the
-markers
-
-  // START
-
-and
-
-  // END
-
-So, in the following code:
-
-  // START
-  let a = 3
-  let b
-  // END
-  assert.equal(a+b, 8)
-
-You can change the let statements, but not the assert. (My intent here would be
-for you to make the test pass my initializing b to 5.
+This assignment requires additional code to make all assertions pass.
+It includes 5 sections  and currently results in all tests passing.
 */
 
 const assert = require('assert').strict   // ignore these two. they just
@@ -159,9 +128,21 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
-let bugs = function (innerFunc){
-  let newSup = String.prototype.sup
+bugs = function (innerFunction) {
+  base = String.prototype.sup;
 
+  String.prototype.sup = function() {
+    return `What's up, ${this}?`;
+  }
+  try {
+    innerFunction();
+  }
+  catch (exception) {
+    throw exception;
+  }
+  finally {
+    String.prototype.sup = base;
+  }
 }
 //END
 
@@ -173,14 +154,12 @@ bugs(function() {
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 
-if (false) {
 
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
 // to `bugs()` throws an exception. You might need to
 // investigate JavaScript exception handling and the
 // `finally` clause.
-
 
 assert.throws(
   () => {
@@ -215,6 +194,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  let myNewObj = Object.create(constructor.prototype);
+  constructor.apply(myNewObj, args);
+  return myNewObj;
   //END
 }
 
@@ -230,4 +212,3 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
