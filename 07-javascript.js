@@ -67,6 +67,10 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function () {
+    // regex
+    return this.replace(/[aAeEiIoOuU]/g, '*')
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,9 +79,9 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
 
 ///////////////// Section 2
+    //
 //
 // Write a constructor function and any associated code
 // to implement a Person class. The constructor takes a name
@@ -95,6 +99,14 @@ if (false) {
 //
 
 // START
+function Person(name, title) {
+    this.name = name;
+    this.title = title;
+}
+
+Person.prototype.fullName = function() {
+    return (this.title + " " + this.name)
+}
 // END
 
 p = new Person("Betty", "Ms")
@@ -115,6 +127,17 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1 {
+    constructor(name, title) {
+        this.name = name 
+        this.title = title
+    }
+
+    fullName() {
+        return (this.title + " " + this.name)
+    }
+
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -124,6 +147,7 @@ assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 
 
+if (false) {
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
