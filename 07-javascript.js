@@ -76,8 +76,7 @@ String.prototype.bowlderize = function() {
                .split('')
                .map(char => {
                    if('aeiouAEIOU'.includes(char)) return '*'
-                   else return char
-               })
+                   else return char})
                .join('')
 }
 // END
