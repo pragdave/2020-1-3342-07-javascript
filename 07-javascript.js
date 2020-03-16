@@ -67,6 +67,11 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function()
+{
+  //using regex to replace the vowels in the string
+  return this.replace(/[aeiouAEIOU]/g, '*');
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +80,6 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
 
 ///////////////// Section 2
 //
@@ -95,6 +99,20 @@ if (false) {
 //
 
 // START
+
+//function that takes in the 2 parameters
+function Person(name, title)
+{
+  this.name = name;
+  this.title = title;
+}
+
+//fullName() with the correct label
+Person.prototype.fullName = function()
+{
+  return this.title + ' ' + this.name;
+}
+
 // END
 
 p = new Person("Betty", "Ms")
@@ -115,6 +133,22 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+//person1 class 
+class Person1
+{
+  //constructor
+  constructor(name, title)
+  {
+    this.name = name;
+    this.title = title;
+  }
+
+  //fullName() with correct label
+  fullName()
+  {
+    return this.title + ' ' + this.name;
+  }
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -143,6 +177,30 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+
+//func called bugs that takes another func
+function bugs(func)
+{
+  //prior sup
+  let supFunc = String.prototype.sup;
+  
+  //correct format
+  String.prototype.sup = function()
+  {
+    return `What's up, ${this}?`
+  }
+
+  try
+  {
+    func();
+  }
+
+  //reset string
+  finally
+  {
+    String.prototype.sup = supFunc;
+  }
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -193,6 +251,12 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+
+  //own version of new that takes a constructor func
+  let mynewObj = Object.create(constructor.prototype);
+  mynewObj.constructor(...args);
+  return mynewObj;
+
   //END
 }
 
@@ -208,4 +272,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
+
+if (false) {}
