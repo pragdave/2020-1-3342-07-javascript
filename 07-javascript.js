@@ -249,5 +249,3 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-
-if (false) {}
