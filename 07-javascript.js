@@ -170,32 +170,19 @@ assert(p.hasOwnProperty("name"))
 
 //START
 function bugs(callback) {
-    try {
-        if(typeof callback == 'function') {     // if parameter is a function
-        
-            stored = String.prototype.sup       // store
-            
-            String.prototype.sup = function() { // overload
-                return `What's up, ${this.toString()}?`
-            }
-            callback()                          // call
-            
-            String.prototype.sup = stored       // restore
-        }
+    let stored = String.prototype.sup   // store
+    
+    String.prototype.sup = function() { // overload
+        return `What's up, ${this.toString()}?`
     }
-    catch (error) {console.log(error)}
+    try {
+        callback()                      // call
+    }
+    catch(error) {
+        throw error
+    }
     finally {
-        if(typeof callback == 'function') {     // if parameter is a function
-        
-            stored = String.prototype.sup       // store
-            
-            String.prototype.sup = function() { // overload
-                return `What's up, ${this.toString()}?`
-            }
-            callback()                          // call
-            
-            String.prototype.sup = stored       // restore
-        }
+        String.prototype.sup = stored   // restore
     }
 
 }
