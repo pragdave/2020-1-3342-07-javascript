@@ -169,7 +169,7 @@ assert(p.hasOwnProperty("name"))
 bugs = function(insideFunc) {
     let original = String.prototype.sup
     String.prototype.sup = function() {
-        return `What's up ${this}?`
+        return `What's up, ${this}?`
     }
     try {
         insideFunc() 
@@ -212,7 +212,6 @@ assert.throws(
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 
-if (false) {
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -232,6 +231,10 @@ if (false) {
 
 function myNew(constructor, ...args) {
   //START
+    //return new constructor(...args) // this technically works?..
+    newObj = Object.create(constructor.prototype) 
+    newObj.constructor(...args);
+    return newObj
   //END
 }
 
@@ -247,4 +250,3 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
