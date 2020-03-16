@@ -170,13 +170,17 @@ assert(p.hasOwnProperty("name"))
 
 //START
 function bugs(callback) {
-    
-    String.prototype.sup = function(){
-        return `What's up, ${this.toString()}?`
+    if(typeof callback == 'function') {     // if parameter is a function
+        
+        stored = String.prototype.sup       // store
+        
+        String.prototype.sup = function() { // overload
+            return `What's up, ${this.toString()}?`
+        }
+        callback()                          // call
+        
+        String.prototype.sup = stored       // restore
     }
-
-    //return `What's up, ${this.toString()}?`
-    if(typeof callback=='function') callback()
 }
 //END
 
@@ -187,14 +191,11 @@ bugs(function() {
 })
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-if (false) {
-
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
 // to `bugs()` throws an exception. You might need to
 // investigate JavaScript exception handling and the
 // `finally` clause.
-
 
 assert.throws(
   () => {
@@ -209,6 +210,7 @@ assert.throws(
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
+if (false) {
 
 ///////////////// Section 5
 //
