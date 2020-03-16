@@ -139,7 +139,7 @@ class Person1 {
         this.title = title
     }
     fullName() {
-        return this.title + ' ' + this.name
+        return `${this.title} ${this.name}`
     }
 }
 // END
@@ -211,10 +211,7 @@ assert.throws(
     message: "boom"
   }
 )
-
-//assert.equal("DOC".sup(), "<sup>DOC</sup>")
-
-if (false) {
+assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 ///////////////// Section 5
 //
@@ -250,4 +247,5 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
+
+if (false) {}
