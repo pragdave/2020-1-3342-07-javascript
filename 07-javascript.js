@@ -171,7 +171,7 @@ assert(p.hasOwnProperty("name"))
 //START
 function bugs(callback) {
     let stored = String.prototype.sup   // store
-    
+
     String.prototype.sup = function() { // overload
         return `What's up, ${this.toString()}?`
     }
@@ -184,7 +184,6 @@ function bugs(callback) {
     finally {
         String.prototype.sup = stored   // restore
     }
-
 }
 //END
 
@@ -213,8 +212,6 @@ assert.throws(
 )
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
-if (false) {
-
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -233,9 +230,11 @@ if (false) {
 // Penalty: -2 layout, -2 naming, -5 works but limited
 
 function myNew(constructor, ...args) {
-  //START
-
-  //END
+    //START
+    let obj = Object.create(constructor.prototype)
+    obj.constructor(...args)
+    return obj
+    //END
 }
 
 function Box(w, h) {
@@ -251,4 +250,4 @@ assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
 
-}
+if (false) {}
