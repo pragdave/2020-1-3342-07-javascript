@@ -147,7 +147,6 @@ assert.equal(p.fullName(), "Mr Fred")
 assert(p.hasOwnProperty("name"))
 
 
-if (false) {
 ///////////////// Section 4
 //
 // The built-in String class defines an instance method
@@ -167,6 +166,21 @@ if (false) {
 // Penalty: -3 layout, -3 naming
 
 //START
+bugs = function(insideFunc) {
+    let original = String.prototype.sup
+    String.prototype.sup = function() {
+        return `What's up ${this}?`
+    }
+    try {
+        insideFunc() 
+    }
+    catch (exception) {
+        throw exception
+    }
+    finally {
+        String.prototype.sup = original
+    }
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -198,6 +212,7 @@ assert.throws(
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 
+if (false) {
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
