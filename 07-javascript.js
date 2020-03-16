@@ -67,6 +67,11 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function (){
+    
+    return this.replace(/[aeiou]/ig,'*')
+}
+
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -75,7 +80,7 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
+
 
 ///////////////// Section 2
 //
@@ -95,6 +100,16 @@ if (false) {
 //
 
 // START
+function Person(name, title){
+  this.title = title
+  this.name = name;
+}
+
+Person.prototype.fullName = function(){
+    return `${this.title} ${this.name}`
+  }
+
+
 // END
 
 p = new Person("Betty", "Ms")
@@ -115,6 +130,25 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1{
+  constructor(name, title){
+    this.title = title
+    this.name = name;
+  }
+  
+  hasOwnProperty(name){
+    return true;
+  }
+  fullName(){
+    return `${this.title} ${this.name}`
+  }
+}
+
+
+
+
+
+
 // END
 
 p = new Person1("Fred", "Mr")
@@ -143,6 +177,23 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(newFunction){
+    let original = String.prototype.sup;
+    String.prototype.sup = function(){
+      return `What's up, ${this}?`
+    }
+    try{
+      newFunction()
+    }
+    
+    finally{
+      String.prototype.sup = original;
+    }
+    
+
+
+}
+
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -174,6 +225,7 @@ assert.throws(
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 
+
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -193,6 +245,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+    let boxNew = Object.create(constructor.prototype)
+    boxNew.constructor(...args)
+    return boxNew
   //END
 }
 
@@ -208,4 +263,8 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
+
+
+
+if (false) {
 }
