@@ -105,10 +105,9 @@ assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 //
 
 // START
-let Person = function(name, title) {
+function Person(name, title) {
     this.name = name
     this.title = title
-    this.fullName()
 }
 Person.prototype.fullName = function() {
     return `${this.title} ${this.name}`
