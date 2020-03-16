@@ -67,8 +67,8 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
-String.prototype.bowlderize = function () {
-  var s = this.replace(/[aeiouAEIOU]/g, "*")
+String.prototype.bowlderize = function () {   //Prototype function that censors all words
+  var s = this.replace(/[aeiouAEIOU]/g, "*")  //Replaces all vowels with a "*"
   return s
 }
 // END
@@ -79,82 +79,115 @@ assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
 
-if (false) {
 
-  ///////////////// Section 2
-  //
-  // Write a constructor function and any associated code
-  // to implement a Person class. The constructor takes a name
-  // and a title (Ms, Mr, ...) both of which are stored in the resulting
-  // object. The object will also have a `fullName()` function
-  // that returns the concatenation of the title and the name
-  //
-  // The tests show this in operation.
-  //
-  // It is OK to add the `fullName` function directly to the prototype.
-  //
-  // Grading: 20 for passing the tests
-  // Penalty:  -3 for layout
-  //           -3 for bad names
-  //
+///////////////// Section 2
+//
+// Write a constructor function and any associated code
+// to implement a Person class. The constructor takes a name
+// and a title (Ms, Mr, ...) both of which are stored in the resulting
+// object. The object will also have a `fullName()` function
+// that returns the concatenation of the title and the name
+//
+// The tests show this in operation.
+//
+// It is OK to add the `fullName` function directly to the prototype.
+//
+// Grading: 20 for passing the tests
+// Penalty:  -3 for layout
+//           -3 for bad names
+//
 
-  // START
-  // END
+// START
+function Person(name, title) { //Person Constructor
+  this.name = name
+  this.title = title
+}
 
-  p = new Person("Betty", "Ms")
-  assert.equal(p.name, "Betty")
-  assert.equal(p.title, "Ms")
-  assert.equal(p.fullName(), "Ms Betty")
+Person.prototype.fullName = function () { //Concatenates the title + name of Person
+  return `${this.title} ${this.name}`
+}
+// END
 
-
-  ///////////////// Section 3
-  //
-  // Reimplement the code from section 2 using the ES2015
-  // `class` syntax. Call the class `Person1` so the name
-  // doesn't clash with that section.
-  //
-  // Grading: 15 for passing the tests
-  // Penalty:  -2 for layout
-  //           -2 for bad names
-  //
-
-  //START
-  // END
-
-  p = new Person1("Fred", "Mr")
-  assert.equal(p.name, "Fred")
-  assert.equal(p.title, "Mr")
-  assert.equal(p.fullName(), "Mr Fred")
-  assert(p.hasOwnProperty("name"))
+p = new Person("Betty", "Ms")
+assert.equal(p.name, "Betty")
+assert.equal(p.title, "Ms")
+assert.equal(p.fullName(), "Ms Betty")
 
 
-  ///////////////// Section 4
-  //
-  // The built-in String class defines an instance method
-  // `sup()` that wraps the string in HTML <sup> tags.
-  //
-  // Write a function called `bugs` that takes a function as
-  // a parameter. This function should change the way
-  // `String.sup()` works: rather than "Doc".sup() returning
-  // "<sup>Doc</sup>", it should return "What's up, Doc?".
-  // It should then call the function that was passed in. When
-  // that function returns, it should reset String so that
-  // the original `sup()` function is restored.
-  //
-  // (ps. This is a bad idea in real code)
-  //
-  // Grading: 20 points to pass tests
-  // Penalty: -3 layout, -3 naming
 
-  //START
-  //END
+///////////////// Section 3
+//
+// Reimplement the code from section 2 using the ES2015
+// `class` syntax. Call the class `Person1` so the name
+// doesn't clash with that section.
+//
+// Grading: 15 for passing the tests
+// Penalty:  -2 for layout
+//           -2 for bad names
+//
 
-  assert.equal("doc".sup(), "<sup>doc</sup>")
-  bugs(function () {
-    assert.equal("Doc".sup(), "What's up, Doc?")
-    assert.equal("Dave".sup(), "What's up, Dave?")
-  })
-  assert.equal("DOC".sup(), "<sup>DOC</sup>")
+//START
+class Person1 {
+  constructor(name, title) {  //Constructor for Person1 Class
+    this.name = name
+    this.title = title
+  }
+
+  fullName() {
+    return `${this.title} ${this.name}`
+  }
+}
+// END
+
+p = new Person1("Fred", "Mr")
+assert.equal(p.name, "Fred")
+assert.equal(p.title, "Mr")
+assert.equal(p.fullName(), "Mr Fred")
+assert(p.hasOwnProperty("name"))
+
+
+
+///////////////// Section 4
+//
+// The built-in String class defines an instance method
+// `sup()` that wraps the string in HTML <sup> tags.
+//
+// Write a function called `bugs` that takes a function as
+// a parameter. This function should change the way
+// `String.sup()` works: rather than "Doc".sup() returning
+// "<sup>Doc</sup>", it should return "What's up, Doc?".
+// It should then call the function that was passed in. When
+// that function returns, it should reset String so that
+// the original `sup()` function is restored.
+//
+// (ps. This is a bad idea in real code)
+//
+// Grading: 20 points to pass tests
+// Penalty: -3 layout, -3 naming
+
+//START
+function bugs(func) {
+  var temp = String.prototype.sup;
+
+  String.prototype.sup = function () {
+    return `What's up, ${this}?`
+  }
+
+  try {
+    func()
+  }
+  finally {
+    String.prototype.sup = temp
+  }
+}
+//END
+
+assert.equal("doc".sup(), "<sup>doc</sup>")
+bugs(function () {
+  assert.equal("Doc".sup(), "What's up, Doc?")
+  assert.equal("Dave".sup(), "What's up, Dave?")
+})
+assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 
   // this second test makes sure that you are correctly
@@ -178,6 +211,7 @@ if (false) {
 
   assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
+  if (false) {
 
   ///////////////// Section 5
   //
