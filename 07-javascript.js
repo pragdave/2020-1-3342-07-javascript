@@ -72,13 +72,13 @@ let str5 = "Offensive Word"
 
 // START
 String.prototype.bowlderize = function() {
-    text = this.toString()
+    return this.toString()
                .split('')
                .map(char => {
                    if('aeiouAEIOU'.includes(char)) return '*'
                    else return char
                })
-    return text.join('')
+               .join('')
 }
 // END
 
@@ -213,6 +213,8 @@ assert.throws(
 )
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
+if (false) {
+
 ///////////////// Section 5
 //
 // We talked about what the `new` operator does.
@@ -232,6 +234,7 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+
   //END
 }
 
@@ -248,4 +251,4 @@ assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
 
-if (false) {}
+}
