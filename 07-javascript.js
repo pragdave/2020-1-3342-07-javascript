@@ -67,6 +67,10 @@ let str4 = "briefly"
 let str5 = "Offensive Word"
 
 // START
+String.prototype.bowlderize = function(){
+	let bowldered = this.replace(/[aeiou]/gi, "*")
+	return bowldered
+}
 // END
 
 assert.equal(str1.bowlderize(), "*bc")
@@ -74,8 +78,6 @@ assert.equal(str2.bowlderize(), "*BC")
 assert.equal(str3.bowlderize(), "b**f")
 assert.equal(str4.bowlderize(), "br**fly")
 assert.equal(str5.bowlderize(), "*ff*ns*v* W*rd")
-
-if (false) {
 
 ///////////////// Section 2
 //
@@ -95,6 +97,14 @@ if (false) {
 //
 
 // START
+function Person(name, title){
+	this.name = name
+	this.title = title
+
+	this.fullName = function(){
+		return this.title + " " + this.name
+	}
+}
 // END
 
 p = new Person("Betty", "Ms")
@@ -115,6 +125,15 @@ assert.equal(p.fullName(), "Ms Betty")
 //
 
 //START
+class Person1{
+	constructor(name, title){
+		this.name = name
+		this.title = title
+	}
+	fullName(){
+		return this.title + " " + this.name
+	}
+}
 // END
 
 p = new Person1("Fred", "Mr")
@@ -143,6 +162,18 @@ assert(p.hasOwnProperty("name"))
 // Penalty: -3 layout, -3 naming
 
 //START
+function bugs(func){
+	var original_sup = String.prototype.sup
+	String.prototype.sup = function(){
+		return "What's up, " + this + "?"
+	}
+	try{
+		func()
+	}
+	finally{
+		String.prototype.sup = original_sup
+	}
+}
 //END
 
 assert.equal("doc".sup(), "<sup>doc</sup>")
@@ -193,6 +224,9 @@ assert.equal("DOC".sup(), "<sup>DOC</sup>")
 
 function myNew(constructor, ...args) {
   //START
+  this.constructor = constructor(...args)
+  this.__proto__ = constructor.prototype
+  return this
   //END
 }
 
@@ -208,4 +242,4 @@ box = myNew(Box, 5, 7)
 assert.equal(box.w, 5)
 assert.equal(box.h, 7)
 assert.equal(box.area(), 35)
-}
+if (false) {}
