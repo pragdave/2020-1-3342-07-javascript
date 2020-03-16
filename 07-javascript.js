@@ -112,7 +112,7 @@ let Person = function(name, title) {
     this.fullName()
 }
 Person.prototype.fullName = function() {
-    return this.title + ' ' + this.name
+    return `${this.title} ${this.name}`
 }
 // END
 
