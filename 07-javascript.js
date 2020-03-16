@@ -175,10 +175,16 @@ assert(p.hasOwnProperty("name"))
 
 //START
 function bugs(func){
-  func() = function() { 
-    let str = this.toString();
-    let newStr = str.replace(/<[^>]*>/g, '');
-    return "What's up, " + newStr + "?" 
+  var original = String.prototype.sup
+  var override = function(){
+    return "What's up, " + this + "?"
+  }
+  String.prototype.sup = override
+  try{ 
+    func()
+  }
+  finally{
+    String.prototype.sup = original
   }
 }
 
@@ -190,7 +196,6 @@ bugs(function() {
   assert.equal("Dave".sup(), "What's up, Dave?")
 })
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
-
 
 // this second test makes sure that you are correctly
 // restoring the `sup()` function if the function passed
@@ -211,6 +216,8 @@ assert.throws(
 )
 
 assert.equal("DOC".sup(), "<sup>DOC</sup>")
+
+//completed LJH
 
 if (false) {
 ///////////////// Section 5
